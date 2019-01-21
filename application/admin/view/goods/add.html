@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ECSHOP 管理中心 - 添加新商品 </title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="__ADMIN__/Styles/general.css" rel="stylesheet" type="text/css" />
+<link href="__ADMIN__/Styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>
+    <span class="action-span"><a href="{:url('goods/list')}">商品列表</a>
+    </span>
+    <span class="action-span1"><a href="">ECSHOP 管理中心</a></span>
+    <span id="search_id" class="action-span1"> - 添加新商品 </span>
+    <div style="clear:both"></div>
+</h1>
+
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front" id="general-tab">通用信息</span>
+            <span class="tab-front" id="general-tab">商品描述</span>
+            <span class="tab-front" id="general-tab">商品属性</span>
+            <span class="tab-front" id="general-tab">相册添加</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form enctype="multipart/form-data" action="" method="post">
+            <table class="table" width="90%" id="general-table" align="center">
+                <tr>
+                    <td class="label">商品名称：</td>
+                    <td><input type="text" name="goods_name" value=""size="30" />
+                    <span class="require-field">*</span></td>
+                </tr>
+                <tr>
+                    <td class="label">商品货号： </td>
+                    <td>
+                        <input type="text" name="goods_sn" value="" size="20"/>
+                        <span id="goods_sn_notice"></span><br />
+                        <span class="notice-span"id="noticeGoodsSN">如果您不输入商品货号，系统将自动生成一个唯一的货号。</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">商品分类：</td>
+                    <td>
+                        <select name="cate_id">
+                            <option value="0">请选择...</option>
+                            {foreach $cate_list as $v}
+                            <option value="{$v.id}">{$v.lev|str_repeat='&nbsp;&nbsp;',###}{$v.cate_name}</option>
+                            {/foreach}
+                        </select>
+                        <span class="require-field">*</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">本店售价：</td>
+                    <td>
+                        <input type="text" name="shop_price" value="" size="20"/>
+                        <span class="require-field">*</span>
+                    </td>
+                </tr>
+                <!--<tr>-->
+                    <!--<td class="label">是否上架：</td>-->
+                    <!--<td>-->
+                        <!--<input type="radio" name="is_sale" value="1" checked="checked" /> 是-->
+                        <!--<input type="radio" name="is_sale" value="0"/> 否-->
+                    <!--</td>-->
+                <!--</tr>-->
+                <tr>
+                    <td class="label">加入推荐：</td>
+                    <td>
+                        <input type="checkbox" name="is_hot" value="1" /> 热卖 
+                        <input type="checkbox" name="is_new" value="1" /> 新品 
+                        <input type="checkbox" name="is_rec" value="1" /> 推荐
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">市场售价：</td>
+                    <td>
+                        <input type="text" name="market_price" value="" size="20" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="label">商品图片：</td>
+                    <td>
+                        <input type="file" name="goods_img" size="35" />
+                    </td>
+                </tr>
+            </table>
+            <table class="table" width="90%" id="general-table" align="center" style="display: none;">
+                <tr>
+                    <td class="label" style="float:left;text-align: left;">商品描述：</td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- 加载编辑器的容器 -->
+                        <script id="container" name="goods_body" type="text/plain" style="min-height: 300px;"></script>
+                        <!-- 配置文件 -->
+                        <script type="text/javascript" src="/static/ueditor/ueditor.config.js"></script>
+                        <!-- 编辑器源码文件 -->
+                        <script type="text/javascript" src="/static/ueditor/ueditor.all.js"></script>
+                        <!-- 实例化编辑器 -->
+                        <script type="text/javascript">
+                            var ue = UE.getEditor('container');
+                        </script>
+                    </td>
+                </tr>
+            </table>
+            <table class="table" width="90%" id="general-table" align="center" style="display: none;">
+                <tr>
+                    <td class="label">商品类型:</td>
+                    <td>
+                        <select name="type_id" id="type_id">
+                            <option value="0">选择类型</option>
+                            {volist name="type_list" id="vo"}
+                                <option value="{$vo.id}">{$vo.type_name}</option>
+                            {/volist}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <!--显示属性-->
+                    <td id="showAttr" style="display: none;"></td>
+                </tr>
+            </table>
+            <!--相册-->
+            <table class="table" width="90%" id="general-table" align="center" style="display: none;">
+                <tr>
+                    <td class="label"><a href="javascript:;" onclick="addImage(this)">[+]</a>上传图片:</td>
+                    <td>
+                        <input class="file" type="file" name="pic[]" />
+                    </td>
+                </tr>
+            </table>
+            <div class="button-div">
+                <input type="submit" value=" 确定 " class="button"/>
+                <input type="reset" value=" 重置 " class="button" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="footer">
+共执行 9 个查询，用时 0.025161 秒，Gzip 已禁用，内存占用 3.258 MB<br />
+版权所有 &copy; 2005-2012 上海商派网络科技有限公司，并保留所有权利。</div>
+</body>
+</html>
+<script type="text/javascript" src="__ADMIN__/Js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    // 点击切换效果
+    $('#tabbar-div span').click(function(){
+        // 1. 隐藏所有的table标签
+        $('.table').hide();
+        // 2. 获取点击的span 序号
+        var index = $(this).index();
+        // 3. 显示 点击的table
+        $('.table').eq(index).show();
+    })
+    // 点击类型，查询请求
+    $('#type_id').bind('change',function () {
+        // 删除添加进去的input
+        $('.ajax_tr').remove();
+
+        // 是否选择了类型
+        if ($(this).val() == 0){
+            $('#showAttr').html('请选择类型');
+            return ;
+        }
+        // 发起Ajax请求
+        $.ajax({
+            type:"get",
+            url:"{:url('goods/showAttribute')}",
+            data:`type_id=${this.value}`,
+            success:function(msg) {
+//                console.log(JSON.parse(msg));
+                // 如果查询成功
+                if (msg.status) {
+                    // 追加数据到页面中
+                    $('#showAttr').parent().parent().append(msg.data);
+                }
+            }
+        })
+    })
+    // 克隆标签
+    function cloneThis(dom){
+        // console.log($(dom).parent().parent());
+        // 获取点击的标签，所属的tr
+        var tr = $(dom).parent().parent();
+        // 克隆tr
+        var clone_tr = tr.clone();
+
+        if ($(clone_tr).find('#clone').html() == '[+]'){
+            // 如果当前为 + ，则克隆当前tr，并修改其值
+            $(clone_tr).find('#clone').html('[-]');
+            tr.after(clone_tr);
+        }else{
+            // 删除当前行的 tr
+            $(tr).remove();
+            // 删除克隆的 tr
+            $(clone_tr).remove();
+        }
+    }
+    // 选择添加图片
+    function addImage(dom) {
+        var tr = $(dom).parent().parent().parent();
+        var tr_clone = tr.clone();
+        tr_clone.find('.file').val('');
+        tr.after(tr_clone);
+    }
+</script>
