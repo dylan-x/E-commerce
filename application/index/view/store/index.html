@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="__HOME__/style/base.css" type="text/css">
+	<link rel="stylesheet" href="__HOME__/style/global.css" type="text/css">
+	<link rel="stylesheet" href="__HOME__/style/header.css" type="text/css">
+	<link rel="stylesheet" href="__HOME__/style/index.css" type="text/css">
+	<link rel="stylesheet" href="__HOME__/style/bottomnav.css" type="text/css">
+	<link rel="stylesheet" href="__HOME__/style/footer.css" type="text/css">
+
+	<script type="text/javascript" src="__HOME__/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="__HOME__/js/header.js"></script>
+	<script type="text/javascript" src="__HOME__/js/index.js"></script>
+	<style>
+		a{
+			text-decoration: none;
+			color: #3c3c3c;
+		}
+		a:hover{
+			text-decoration: none;
+		}
+		a:hover div{
+			text-decoration: none;
+			background-color: #624B47;
+		}
+	</style>
+</head>
+<body>
+
+	{include file="public/little_header"}
+
+	<!-- 收藏栏 -->
+	<div style="height: 60px;background-color: #202F47">
+		<div  style="width: 1200px;height:100%;margin: 0 auto;">
+			<a href="{:url('index/index/index')}">
+				<div style="width: 120px;height:100%;text-align: center;line-height: 60px;display: inline-block;">
+					<span style="font-size: 16px;color: #FFFFFF;">首页</span>
+				</div>
+			</a>
+			<a href="{:url('index/store/index')}">
+				<div style="width: 120px;height:100%;text-align: center;line-height: 60px;display: inline-block;">
+					<span style="font-size: 16px;color: #FFFFFF;">我的收藏</span>
+				</div>
+			</a>
+		</div>
+	</div>
+	<!-- 收藏栏 end -->
+
+	<!-- 内容区域 -->
+	<div id="box1" style="width: 1200px;height: 100%;margin: 0 auto;">
+		{volist name="data" id="vo"}
+		<div style="display: inline-block;width: 150px;height: 150px;">
+			<div id="box" style="width: 150px;height: 150px;display: inline-block;border: 1px solid #f6f6f6;border-radius: 8px;">
+				<a href="{:url('index/goods/index','id='.$vo.id)}">
+					<img style="width: 150px;height: 150px;" src="__HOME__/{$vo.goods_image}" >
+				</a>
+			</div>
+			<div style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
+				<a href="{:url('index/goods/index','id='.$vo.id)}" style="font-size: 14px;">{$vo.goods_name}</a>
+			</div>
+			<div >
+				<div style="text-align: center;width: 150px;height: 150px;">
+					<span style="color: #f40;">&yen;</span>
+					<span style="color: #f40;"><strong>{$vo.shop_price}</strong></span>
+				</div>
+			</div>
+		</div>
+		{/volist}
+	</div>
+	<!-- 内容区域 end -->
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
